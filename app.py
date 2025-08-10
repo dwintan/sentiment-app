@@ -18,11 +18,11 @@ nltk.download('stopwords')
 # ======= LINK MODEL GOOGLE DRIVE (GANTI SESUAI FILE MODELMU) =======
 MODEL_FOLDER = "model_finetuned"
 MODEL_FILES = {
-    "config.json": "https://drive.google.com/file/d/1a4Yl35yHFOKPHNcEIynko2cDHfHqQ9PR",
-    "model.safetensors": "https://drive.google.com/file/d/16xGLQkVUwEkhCbL_QYJQSIOMyvpdWuiS",
-    "special_tokens_map.json": "https://drive.google.com/file/d/1n0Sk8pmgYYZtTGXPRbTvN7GXGo8YILeB",
-    "tokenizer_config.json": "https://drive.google.com/file/d/10tw-9e5BP7uHp6Gxlb_BVSGqLQGjNWWK",
-    "vocab.txt": "https://drive.google.com/file/d/1vAtkdbOCYU4QUcj44K9nDaQ7rsnjA86I"
+    "config.json": "https://drive.google.com/uc?id=1a4Yl35yHFOKPHNcEIynko2cDHfHqQ9PR",
+    "model.safetensors": "https://drive.google.com/uc?id=/16xGLQkVUwEkhCbL_QYJQSIOMyvpdWuiS",
+    "special_tokens_map.json": "https://drive.google.com/uc?id=1n0Sk8pmgYYZtTGXPRbTvN7GXGo8YILeB",
+    "tokenizer_config.json": "https://drive.google.com/uc?id=10tw-9e5BP7uHp6Gxlb_BVSGqLQGjNWWK",
+    "vocab.txt": "https://drive.google.com/uc?id=1vAtkdbOCYU4QUcj44K9nDaQ7rsnjA86I"
 }
 
 # ======= Fungsi download model dari Drive =======
