@@ -19,7 +19,7 @@ nltk.download('stopwords')
 MODEL_FOLDER = "model_finetuned"
 MODEL_FILES = {
     "config.json": "https://drive.google.com/uc?id=1a4Yl35yHFOKPHNcEIynko2cDHfHqQ9PR",
-    "model.safetensors": "https://drive.google.com/uc?id=/16xGLQkVUwEkhCbL_QYJQSIOMyvpdWuiS",
+    "model.safetensors": "https://drive.google.com/uc?id=16xGLQkVUwEkhCbL_QYJQSIOMyvpdWuiS",
     "special_tokens_map.json": "https://drive.google.com/uc?id=1n0Sk8pmgYYZtTGXPRbTvN7GXGo8YILeB",
     "tokenizer_config.json": "https://drive.google.com/uc?id=10tw-9e5BP7uHp6Gxlb_BVSGqLQGjNWWK",
     "vocab.txt": "https://drive.google.com/uc?id=1vAtkdbOCYU4QUcj44K9nDaQ7rsnjA86I"
@@ -40,18 +40,13 @@ def download_model():
     if os.path.exists(safetensors_path) and not os.path.exists(pytorch_path):
         os.rename(safetensors_path, pytorch_path)
 
-def cek_tokenizer_config():
-    path = os.path.join(MODEL_FOLDER, "tokenizer_config.json")
-    if os.path.exists(path):
-        try:
-            with open(path, "r", encoding="utf-8") as f:
-                data = json.load(f)
-            st.write("Isi tokenizer_config.json berhasil dibaca:")
-            st.write(data)
-        except Exception as e:
-            st.error(f"ERROR baca tokenizer_config.json: {e}")
-    else:
-        st.error("File tokenizer_config.json tidak ditemukan.")
+    tokenizer_config_path = os.path.join(MODEL_FOLDER, "tokenizer_config.json")
+    try:
+        with open(tokenizer_config_path, "r", encoding="utf-8") as f:
+            json.load(f)
+        st.success("tokenizer_config.json valid")
+    except Exception as e:
+        st.error(f"File tokenizer_config.json invalid: {e}")
 
 # ======= Preprocessing sesuai skripsi =======
 factory = StemmerFactory()
@@ -114,7 +109,6 @@ def main():
     st.write("Upload file CSV yang berisi kolom `Isi` berisi teks berita impor tekstil.")
 
     download_model()
-    cek_tokenizer_config()
 
     tokenizer, model = load_model_tokenizer()
 
