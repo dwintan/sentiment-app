@@ -35,14 +35,6 @@ def download_model():
             with st.spinner(f"Mengunduh {filename}..."):
                 gdown.download(url, path, quiet=False)
 
-    tokenizer_config_path = os.path.join(MODEL_FOLDER, "tokenizer_config.json")
-    try:
-        with open(tokenizer_config_path, "r", encoding="utf-8") as f:
-            json.load(f)
-        st.success("tokenizer_config.json valid")
-    except Exception as e:
-        st.error(f"File tokenizer_config.json invalid: {e}")
-
 # ======= Preprocessing sesuai skripsi =======
 factory = StemmerFactory()
 stemmer = factory.create_stemmer()
