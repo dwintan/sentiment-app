@@ -5,7 +5,7 @@ import gdown
 import streamlit as st
 import torch
 import pandas as pd
-from transformers import AutoTokenizer, AutoModelForSequenceClassification, BertForSequenceClassification, BertConfig
+from transformers import AutoTokenizer, AutoConfig, AutoModelForSequenceClassification, BertForSequenceClassification, BertConfig
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
@@ -79,8 +79,8 @@ def preprocess_text(text):
 @st.cache_resource
 def load_model_tokenizer():
     tokenizer = AutoTokenizer.from_pretrained(MODEL_FOLDER)
-    config = BertConfig.from_pretrained(MODEL_FOLDER)
-    model = BertForSequenceClassification.from_pretrained(MODEL_FOLDER, config=config)
+    config = AutoConfig.from_pretrained(MODEL_FOLDER)
+    model = AutoModelForSequenceClassification.from_pretrained(MODEL_FOLDER, config=config)
     model.eval()
     return tokenizer, model
 
