@@ -5,7 +5,7 @@ import gdown
 import streamlit as st
 import torch
 import pandas as pd
-from transformers import AutoTokenizer, AutoModelForSequenceClassification
+from transformers import AutoTokenizer, AutoModelForSequenceClassification, BertForSequenceClassification, BertConfig
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
@@ -17,11 +17,11 @@ nltk.download('stopwords')
 # ======= LINK MODEL GOOGLE DRIVE (GANTI SESUAI FILE MODELMU) =======
 MODEL_FOLDER = "model_finetuned"
 MODEL_FILES = {
-    "config.json": "https://drive.google.com/file/d/1a4Yl35yHFOKPHNcEIynko2cDHfHqQ9PR/",
-    "model.safetensors": "https://drive.google.com/file/d/16xGLQkVUwEkhCbL_QYJQSIOMyvpdWuiS/",
-    "special_tokens_map.json": "https://drive.google.com/file/d/1n0Sk8pmgYYZtTGXPRbTvN7GXGo8YILeB/",
-    "tokenizer_config.json": "https://drive.google.com/file/d/10tw-9e5BP7uHp6Gxlb_BVSGqLQGjNWWK/",
-    "vocab.txt": "https://drive.google.com/file/d/1vAtkdbOCYU4QUcj44K9nDaQ7rsnjA86I/"
+    "config.json": "https://drive.google.com/file/d/1a4Yl35yHFOKPHNcEIynko2cDHfHqQ9PR",
+    "model.safetensors": "https://drive.google.com/file/d/16xGLQkVUwEkhCbL_QYJQSIOMyvpdWuiS",
+    "special_tokens_map.json": "https://drive.google.com/file/d/1n0Sk8pmgYYZtTGXPRbTvN7GXGo8YILeB",
+    "tokenizer_config.json": "https://drive.google.com/file/d/10tw-9e5BP7uHp6Gxlb_BVSGqLQGjNWWK",
+    "vocab.txt": "https://drive.google.com/file/d/1vAtkdbOCYU4QUcj44K9nDaQ7rsnjA86I"
 }
 
 # ======= Fungsi download model dari Drive =======
@@ -33,6 +33,11 @@ def download_model():
         if not os.path.exists(path):
             with st.spinner(f"Mengunduh {filename}..."):
                 gdown.download(url, path, quiet=False)
+    # Rename .safetensors ke pytorch_model.bin
+    safetensors_path = os.path.join(MODEL_FOLDER, "model.safetensors")
+    pytorch_path = os.path.join(MODEL_FOLDER, "pytorch_model.bin")
+    if os.path.exists(safetensors_path) and not os.path.exists(pytorch_path):
+        os.rename(safetensors_path, pytorch_path)
 
 # ======= Preprocessing sesuai skripsi =======
 factory = StemmerFactory()
@@ -74,7 +79,8 @@ def preprocess_text(text):
 @st.cache_resource
 def load_model_tokenizer():
     tokenizer = AutoTokenizer.from_pretrained(MODEL_FOLDER)
-    model = AutoModelForSequenceClassification.from_pretrained(MODEL_FOLDER)
+    config = BertConfig.from_pretrained(MODEL_FOLDER)
+    model = BertForSequenceClassification.from_pretrained(MODEL_FOLDER, config=config)
     model.eval()
     return tokenizer, model
 
