@@ -34,11 +34,6 @@ def download_model():
         if not os.path.exists(path):
             with st.spinner(f"Mengunduh {filename}..."):
                 gdown.download(url, path, quiet=False)
-    # Rename .safetensors ke pytorch_model.bin
-    safetensors_path = os.path.join(MODEL_FOLDER, "model.safetensors")
-    pytorch_path = os.path.join(MODEL_FOLDER, "pytorch_model.bin")
-    if os.path.exists(safetensors_path) and not os.path.exists(pytorch_path):
-        os.rename(safetensors_path, pytorch_path)
 
     tokenizer_config_path = os.path.join(MODEL_FOLDER, "tokenizer_config.json")
     try:
