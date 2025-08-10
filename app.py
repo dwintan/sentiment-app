@@ -39,6 +39,19 @@ def download_model():
     if os.path.exists(safetensors_path) and not os.path.exists(pytorch_path):
         os.rename(safetensors_path, pytorch_path)
 
+def cek_tokenizer_config():
+    path = os.path.join(MODEL_FOLDER, "tokenizer_config.json")
+    if os.path.exists(path):
+        try:
+            with open(path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            st.write("Isi tokenizer_config.json berhasil dibaca:")
+            st.write(data)
+        except Exception as e:
+            st.error(f"ERROR baca tokenizer_config.json: {e}")
+    else:
+        st.error("File tokenizer_config.json tidak ditemukan.")
+
 # ======= Preprocessing sesuai skripsi =======
 factory = StemmerFactory()
 stemmer = factory.create_stemmer()
@@ -100,6 +113,7 @@ def main():
     st.write("Upload file CSV yang berisi kolom `Isi` berisi teks berita impor tekstil.")
 
     download_model()
+    cek_tokenizer_config()
 
     tokenizer, model = load_model_tokenizer()
 
