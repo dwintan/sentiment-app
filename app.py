@@ -13,7 +13,7 @@ from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
 import nltk
 
 nltk.download('punkt_tab')
-# nltk.download('stopwords')
+nltk.download('stopwords')
 
 # ======= LINK MODEL GOOGLE DRIVE (GANTI SESUAI FILE MODELMU) =======
 MODEL_FOLDER = "model_finetuned"
